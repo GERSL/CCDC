@@ -12,7 +12,6 @@ function autoPrepareDataARD(varargin)
 %   -------------
 %   The input data must be of class .tif or .img.
 %   
-%
 % Specific parameters
 % ------------------------
 %   'InputDirectory'     Directory of input data.  Default is the path to
