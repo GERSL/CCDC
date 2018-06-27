@@ -2,7 +2,8 @@ function autoPrepareDataESPA(varargin)
 %AUTOPREPAREDATAARD Prepare Landsat Surface Reflectance into CCDC format, 
 % which are downloaded from USGS Earth Resources Observation and Science
 % (EROS) Center Science Processing Architecture (ESPA)
-% (https://espa.cr.usgs.gov/)
+% (https://espa.cr.usgs.gov/).
+% This function was tested on Matlab 2017b.
 %
 %   AUTOPREPAREDATAARD() automatically prepares all Landsat ESPA product in
 %   the current folder into CCDC format.
