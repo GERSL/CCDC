@@ -83,7 +83,7 @@ function autoPrepareDataESPA(varargin)
     imfs = dir(fullfile(dir_cur,'L*.tar.gz'));
     % filter for Landsat folders
     % espa data
-    imfs = regexpi({imfs.name}, 'L(T05|T04|E07|C08)(\w*)\-(\w*)', 'match'); 
+    imfs = regexpi({imfs.name}, 'L(T05|T04|E07|C08)(\w*)\-(\w*).tar.gz', 'match'); 
     imfs = [imfs{:}];
     if isempty(imfs)
         warning('No images here!');
@@ -143,7 +143,9 @@ function autoPrepareDataESPA(varargin)
             n_gun = gunzip(fullfile(dir_cur,imf),fullfile(dir_out,n_tmp));
             n_tar = untar(fullfile(dir_out,n_tmp,imf(1:end-3)),fullfile(dir_out,n_tmp));
         catch me
-            rmdir(fullfile(dir_out,n_tmp),'s');
+            if isfolder(fullfile(dir_out,n_tmp))
+                rmdir(fullfile(dir_out,n_tmp),'s');
+            end
             fprintf('File cannot be found in the %dth image',i);
             continue;
         end
