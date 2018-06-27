@@ -53,7 +53,7 @@ function autoPrepareDataARD(varargin)
 
     %% Locate to the current directory
     % name of the temporary folder for extracting zip files
-    name_tmp = '_tmp';
+    name_tmp = 'tmp';
     % remove all temp folders
     tmpf = dir(fullfile(dir_out,[name_tmp,'*']));
     if ~isempty(tmpf)
@@ -71,7 +71,7 @@ function autoPrepareDataARD(varargin)
     % filter for Landsat folders
     % espa data
     %imf = regexpi({imf.name}, 'L(T05|T04|E07|C08)(\w*)\-(\w*)', 'match'); 
-    imfs = regexpi({imfs.name}, 'L(T05|T04|E07|C08)(\w*)', 'match');
+    imfs = regexpi({imfs.name}, 'L(T05|T04|E07|C08)(\w*).tar', 'match');
     %imf = regexpi({imf.name}, 'L(T05|T04|E07|C08).*', 'match');
     imfs = [imfs{:}];
     if isempty(imfs)
@@ -132,7 +132,9 @@ function autoPrepareDataARD(varargin)
             sr_tar = untar(fullfile(dir_cur,imf),fullfile(dir_out,n_tmp));
             bt_tar = untar(fullfile(dir_cur,[imf(1:end-6),'BT.tar']),fullfile(dir_out,n_tmp));
         catch me
-            rmdir(fullfile(dir_out,n_tmp),'s');
+            if isfolder(fullfile(dir_out,n_tmp))
+                rmdir(fullfile(dir_out,n_tmp),'s');
+            end
             fprintf('BT or SR file cannot be found in the %dth image',i);
             continue;
         end
