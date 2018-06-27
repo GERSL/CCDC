@@ -1,6 +1,6 @@
 function autoPrepareDataARD(varargin)
 %AUTOPREPAREDATAARD Prepare U.S. Landsat Analysis Ready Data (ARD) into CCDC
-%format.
+%format. This function was tested on Matlab 2017b.
 %
 %   AUTOPREPAREDATAARD() automatically prepares all Landsat ARD in the
 %   current folder into CCDC format.
