@@ -535,7 +535,7 @@ function autoPrepareDataESPA(varargin)
 
         % add directory
         n_dir = fullfile(dir_out,n_mtl);
-        if fold_exist == 0
+        if ~isfolder(n_dir)
             mkdir(n_dir);
         end
 
