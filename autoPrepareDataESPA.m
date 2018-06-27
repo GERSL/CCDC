@@ -66,7 +66,7 @@ function autoPrepareDataESPA(varargin)
 
     %% Locate to the current directory
     % name of the temporary folder for extracting zip files
-    name_tmp = '_tmp';
+    name_tmp = 'tmp';
     % remove all temp folders
     tmpf = dir(fullfile(dir_out,[name_tmp,'*']));
     if ~isempty(tmpf)
