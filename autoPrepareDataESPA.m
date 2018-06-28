@@ -42,7 +42,7 @@ function autoPrepareDataESPA(varargin)
     % where the all Landsat zipped files are
     dir_cur = pwd;
     % where the output files are
-    dir_out = dir_cur;
+    dir_out = ‘’;
     % min clear pixel
     clr_pct_min = 20; % unit %
     % total number of bands
@@ -61,6 +61,9 @@ function autoPrepareDataESPA(varargin)
     parse(p,varargin{:});
     dir_cur = p.Results.InputDirectory;
     dir_out = p.Results.OutputDirectory;
+    if isempty(dir_out)
+        dir_out = dir_cur;
+    end
     clr_pct_min = p.Results.ClearPixelPercent;
     trgt_file = p.Results.ExtentSample;
     
