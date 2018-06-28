@@ -31,7 +31,7 @@ function autoPrepareDataARD(varargin)
     % where the all Landsat zipped files are
     dir_cur = pwd;
     % where the output files are
-    dir_out = dir_cur;
+    dir_out = ‘’;
     % min clear pixel
     clr_pct_min = 20; % unit %
     % total number of bands
@@ -43,6 +43,9 @@ function autoPrepareDataARD(varargin)
     % default values.
     addParameter(p,'InputDirectory',dir_cur);
     addParameter(p,'OutputDirectory',dir_out);
+    if isempty(dir_out)
+        dir_out = dir_cur;
+    end
     addParameter(p,'ClearPixelPercent',clr_pct_min);
     % request user's input
     parse(p,varargin{:});
