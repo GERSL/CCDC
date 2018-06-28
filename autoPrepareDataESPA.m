@@ -2,8 +2,7 @@ function autoPrepareDataESPA(varargin)
 %AUTOPREPAREDATAARD Prepare Landsat Surface Reflectance into CCDC format, 
 % which are downloaded from USGS Earth Resources Observation and Science
 % (EROS) Center Science Processing Architecture (ESPA)
-% (https://espa.cr.usgs.gov/).
-% This function was tested on Matlab 2017b.
+% (https://espa.cr.usgs.gov/)
 %
 %   AUTOPREPAREDATAARD() automatically prepares all Landsat ESPA product in
 %   the current folder into CCDC format.
@@ -42,7 +41,7 @@ function autoPrepareDataESPA(varargin)
     % where the all Landsat zipped files are
     dir_cur = pwd;
     % where the output files are
-    dir_out = ‘’;
+    dir_out = '';
     % min clear pixel
     clr_pct_min = 20; % unit %
     % total number of bands
@@ -66,8 +65,7 @@ function autoPrepareDataESPA(varargin)
     end
     clr_pct_min = p.Results.ClearPixelPercent;
     trgt_file = p.Results.ExtentSample;
-    
-
+  
     %% Locate to the current directory
     % name of the temporary folder for extracting zip files
     name_tmp = 'tmp';
@@ -125,6 +123,7 @@ function autoPrepareDataESPA(varargin)
                 if n_img(i_check).isdir
                     % each image folder name
                     tmp_img = n_img(i_check).name;
+        
                     tmp_zip = n_mtl;
                     if strcmp(tmp_img(1:16),tmp_zip(1:16))
                         outf = dir(fullfile(dir_out,tmp_img,[char(n_mtl),'_MTLstack']));
@@ -166,6 +165,10 @@ function autoPrepareDataESPA(varargin)
         if ~isempty(env_cfmask) % envi format
             env_cfmask = fullfile(dir_out,n_tmp,env_cfmask.name);
             [cfmask0,jidim,jiul,resolu,zc] = enviread(env_cfmask);
+            if ~isempty(trgt_file)
+                fprintf('Images can not be support for resampling to same extent. Only geotiff is workable.\n');
+                return;
+            end
         else
             tif_cfmask = fullfile(dir_out,n_tmp,tif_cfmask.name);
             cfmask0 = geotiffread(tif_cfmask);
@@ -190,14 +193,42 @@ function autoPrepareDataESPA(varargin)
             continue;
         else
             if ~isempty(tif_cfmask) % tif format(tif_cfmask);
-                % get projection information from geotiffinfo
-                info = geotiffinfo(tif_cfmask);
-                jidim = [info.SpatialRef.RasterSize(2),info.SpatialRef.RasterSize(1)];
-                jiul = [info.SpatialRef.XLimWorld(1),info.SpatialRef.YLimWorld(2)];
-                resolu = [info.PixelScale(1),info.PixelScale(2)];
-                zc = info.Zone;
+                if ~isempty(trgt_file)
+                    % have targt file
+                    try
+                        trgt_obj = GRIDobj(trgt_file);
+                        trgt_obj.Z = [];% empty memory
+                        
+                        % read cfmask
+                        cfmask_obj = GRIDobj(tif_cfmask);
+                        cfmask_obj.Z = cfmask;
+                        clear cfmask;
+                        % same extent and resolution
+                        tmp_obj_same_extn = resample(cfmask_obj,trgt_obj,'nearest',true);
+                        cfmask = tmp_obj_same_extn.Z;
+                        clear cfmask_obj tmp_obj_same_extn;
+                    catch
+                        fprintf('Sample file can not be support for resampling to same extent. Only geotiff is workable.\n');
+                        return;
+                    end
+                    
+                    % get projection information from geotiffinfo
+                    info = geotiffinfo(trgt_file);
+                    jidim = [info.SpatialRef.RasterSize(2),info.SpatialRef.RasterSize(1)];
+                    jiul = [info.SpatialRef.XLimWorld(1),info.SpatialRef.YLimWorld(2)];
+                    resolu = [info.PixelScale(1),info.PixelScale(2)];
+                    zc = info.Zone;
+                    clear info;
+                else
+                    % get projection information from geotiffinfo
+                    info = geotiffinfo(tif_cfmask);
+                    jidim = [info.SpatialRef.RasterSize(2),info.SpatialRef.RasterSize(1)];
+                    jiul = [info.SpatialRef.XLimWorld(1),info.SpatialRef.YLimWorld(2)];
+                    resolu = [info.PixelScale(1),info.PixelScale(2)];
+                    zc = info.Zone;
+                    clear info;
+                end
             end
-
             % prelocate image for the stacked image
             stack = zeros(jidim(2),jidim(1),nbands,'int16');
             % give cfmask to the last band
@@ -354,15 +385,6 @@ function autoPrepareDataESPA(varargin)
                     stack(:,:,7) = surf_b6;
                 end
             else
-                % have targt file
-                try
-                    trgt_obj = GRIDobj(trgt_file);
-                    trgt_obj.Z = [];% empty memory
-                catch
-                    fprintf('Sample file can not be support. Only geotiff is workable.\n');
-                    return;
-                end
-                
                 if str2num(n_mtl(3)) < 8
                     
                     n_surf = dir(fullfile(dir_out,n_tmp,'L*sr_band1.tif'));
@@ -502,7 +524,7 @@ function autoPrepareDataESPA(varargin)
 
                     n_surf = dir(fullfile(dir_out,n_tmp,'L*sr_band7.tif'));
                     n_surf = fullfile(dir_out,n_tmp,n_surf.name);
-                    surf_b7 = geotiffread(n_surf);=
+                    surf_b7 = geotiffread(n_surf);
                     tmp_obj = GRIDobj(n_surf);
                     % gridobj reader may be NaN because this is special for DEM data.
                     tmp_obj.Z = surf_b7; clear surf_b7;
