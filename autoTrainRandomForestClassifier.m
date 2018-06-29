@@ -1,5 +1,5 @@
-function autoTrainRandomForestClassifier(varargin)
-%AUTOTRAINRANDOMFORESTCLASSIFIER trains a RandomForestClassifier (RFC)
+function autoTrainRFC(varargin)
+%AUTOTRAINRFC trains a RandomForestClassifier (RFC)
 %based on CCDC change detection results and an land cover reference image.
 %
 % Specific parameters
