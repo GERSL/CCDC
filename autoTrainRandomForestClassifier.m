@@ -8,10 +8,12 @@ function autoTrainRandomForestClassifier(varargin)
 %   'SampleYear'         The year of the reference data. *REQUIRED.
 %   'SampleNumber'       Total number of training samples. Default is
 %                        20,000
+%   'NTree'              Number of trees grown. Default is 500.
 %   'InputDirectory'     Directory of CCDC change detection results.  
 %                        Default is the path to current folder.
 %   'OutputDirectory'    Directory of the model output.  Default is the 
 %                        same as InputDirectory.
+
 %
 % History
 % ------------------------
@@ -35,6 +37,8 @@ function autoTrainRandomForestClassifier(varargin)
     dir_cur = pwd;
     % where the output files are
     dir_out = '';
+    % number of trees grown.
+    ntree = 500;
     % request the user's inputs
     p = inputParser;
     p.FunctionName = 'trainParas';
@@ -45,6 +49,7 @@ function autoTrainRandomForestClassifier(varargin)
     addParameter(p,'SampleImage','');
     addParameter(p,'SampleYear','');
     addParameter(p,'SampleNumber','');
+    addParameter(p,'NTree',ntree);
     
     parse(p,varargin{:});
     dir_cur = p.Results.InputDirectory;
@@ -53,6 +58,10 @@ function autoTrainRandomForestClassifier(varargin)
         dir_out = dir_cur;
     end
     ccdc_dir = dir_cur; clear dir_cur;
+    
+    % number of trees grown.
+    ntree = p.Results.NTree;
+    
     name_roi = p.Results.SampleImage;
     
     if isempty(name_roi)
@@ -262,9 +271,8 @@ function autoTrainRandomForestClassifier(varargin)
     fprintf(fileID,'******************************************************************************************************\r\n');
     fclose(fileID);
 
-    modelRF = classRF_train(sel_X_trn,sel_Y_trn);
+    modelRF = classRF_train(sel_X_trn,sel_Y_trn,ntree);
     save(fullfile(dir_out,'modelRF'),'modelRF','-v7.3'); 
     
     fprintf('Finishined Training! The model can be found at %s\r\n',dir_out);
 end
-
