@@ -174,8 +174,8 @@ function autoPrepareDataARD(varargin)
             % remove the tmp folder
             % fprintf('Clear observation less than 20 percent (%.2f) ...\n',clr_pct*100);
             rmdir(fullfile(dir_out,n_tmp),'s');
-            % fprintf('Clear observation less than %.2f percent (%.2f) ...\n',clr_pct_min,clr_pct);
-            fprintf('Clear observation less than %.2f percent (%.2f) for %s\n',clr_pct_min,clr_pct,imf);
+            % fprintf('Clear pixels less than %.2f percent (%.2f) ...\n',clr_pct_min,clr_pct);
+            fprintf('Clear pixels less than %.2f percent (%.2f) for %s\n',clr_pct_min,clr_pct,imf);
             continue;
         else
             if ~isempty(tif_cfmask) % tif format(tif_cfmask);
