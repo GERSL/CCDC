@@ -359,7 +359,6 @@ function autoPrepareDataARD(varargin)
         n_dir = fullfile(dir_out,n_mtl);
         if ~isfolder(n_dir)
             mkdir(n_dir);
-            [~,~,~] =  fileattrib(n_dir,'-h'); % always unhidden
         end
 
         % write to images folder
