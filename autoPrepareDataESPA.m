@@ -562,10 +562,15 @@ function autoPrepareDataESPA(varargin)
 
         % add directory
         n_dir = fullfile(dir_out,n_mtl);
-        if ~isfolder(n_dir)
+        % if ~isfolder(n_dir)
+        %     mkdir(n_dir);
+        % end
+        % works before 2017b
+        n_dir_isfolder = dir(n_dir);
+        if isempty(n_dir_isfolder)
             mkdir(n_dir);
-            [~,~,~] =  fileattrib(n_dir,'-h'); % always unhidden
         end
+        clear n_dir_isfolder;
 
         % write to images folder
         % fprintf('Writing %s image ...\n',n_mtl);
