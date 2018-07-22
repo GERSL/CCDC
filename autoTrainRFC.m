@@ -5,6 +5,10 @@ function autoTrainRFC(varargin)
 % Specific parameters
 % ------------------------
 %   'SampleImage'        A reference image with '.hdr' format. *REQUIRED.
+%                        Note Do not input '.hdr'. For example, if your 
+%                        sample file name is 'your_path/sample.hdr', you
+%                        should input 'your_path/sample'.
+%
 %   'SampleYear'         The year of the reference data. *REQUIRED.
 %   'SampleNumber'       Total number of training samples. Default is
 %                        20,000
