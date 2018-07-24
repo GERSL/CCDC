@@ -18,8 +18,8 @@ function autoPrepareDataARD(varargin)
 %                        the current folder.
 %   'OutputDirectory'    Directory of output data.  Default is the path to
 %                        the current folder.
-%   'ClearPixelPercent'  Percentage of mininum clear pixels. Unit is %.
-%                        Default is '20'.
+%   'ClearPixelPercent'  Percentage of mininum clear pixels 
+%                        (non-ice/snow covered). Unit is %. Default is '20'.
 %
 %
 %   Author:  Zhe Zhu (zhe.zhu#ttu.edu)
