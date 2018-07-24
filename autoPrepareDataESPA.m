@@ -28,8 +28,8 @@ function autoPrepareDataESPA(varargin)
 %                        used as basic reference. All images will be 
 %                        resampled to this same extent.  Default is not to
 %                        do this process if no input for this.
-%   'ClearPixelPercent'  Percentage of mininum clear pixels. Unit is %.
-%                        Default is '20'.
+%   'ClearPixelPercent'  Percentage of mininum clear pixels 
+%                        (non-ice/snow covered). Unit is %. Default is '20'.
 %
 %
 %   Author:  Zhe Zhu (zhe.zhu#ttu.edu)
