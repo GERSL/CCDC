@@ -134,7 +134,7 @@ function autoTrainRFC(varargin)
         % Just load once for a line of rec_cg for all reference within this line    
         if i_ids(i) ~= i_row
 
-            fprintf('Processing the %dth line ...\n',i);
+            fprintf('Processing the %dth line ...\n',i_row);
 
             % load CCDCRec
             load(fullfile(tsfitmap_path,['record_change',num2str(i_ids(i))]));
