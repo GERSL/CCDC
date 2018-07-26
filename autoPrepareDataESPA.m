@@ -198,7 +198,7 @@ function autoPrepareDataESPA(varargin)
                     % have targt file
                     try
                         trgt_obj = GRIDobj(trgt_file);
-                        trgt_obj.Z = [];% empty memory
+                        trgt_obj.Z = 255;% empty memory
                         
                         % read cfmask
                         cfmask_obj = GRIDobj(tif_cfmask);
@@ -386,6 +386,7 @@ function autoPrepareDataESPA(varargin)
                     stack(:,:,7) = surf_b6;
                 end
             else
+                trgt_obj.Z = -9999;% initially marked as non-data
                 if str2num(n_mtl(3)) < 8
                     
                     n_surf = dir(fullfile(dir_out,n_tmp,'L*sr_band1.tif'));
