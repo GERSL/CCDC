@@ -205,7 +205,7 @@ function autoPrepareDataESPA(varargin)
                         cfmask_obj.Z = cfmask;
                         clear cfmask;
                         % same extent and resolution
-                        tmp_obj_same_extn = resample(cfmask_obj,trgt_obj,'nearest',true);
+                        tmp_obj_same_extn = resample(cfmask_obj,trgt_obj,'nearest',true,'fillval',255);
                         cfmask = tmp_obj_same_extn.Z;
                         clear cfmask_obj tmp_obj_same_extn;
                     catch
@@ -386,7 +386,7 @@ function autoPrepareDataESPA(varargin)
                     stack(:,:,7) = surf_b6;
                 end
             else
-                trgt_obj.Z = zeros(trgt_obj.size)- 9999;% empty memory initially masked as non-data
+                
                 if str2num(n_mtl(3)) < 8
                     
                     n_surf = dir(fullfile(dir_out,n_tmp,'L*sr_band1.tif'));
@@ -397,7 +397,7 @@ function autoPrepareDataESPA(varargin)
                     % gridobj reader may be NaN because this is special for DEM data.
                     tmp_obj.Z = surf_b1; clear surf_b1;
                     % same extent and resolution
-                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest',true);
+                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest','fillval',-9999);
                     stack(:,:,1) = tmp_obj_same_extn.Z;
                     clear tmp_obj tmp_obj_same_extn;
 
@@ -408,7 +408,8 @@ function autoPrepareDataESPA(varargin)
                     % gridobj reader may be NaN because this is special for DEM data.
                     tmp_obj.Z = surf_b2; clear surf_b2;
                     % same extent and resolution
-                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest',true);
+                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest',true,'fillval',-9999);
+                    
                     stack(:,:,2) = tmp_obj_same_extn.Z;
                     clear tmp_obj tmp_obj_same_extn;
 
@@ -419,7 +420,7 @@ function autoPrepareDataESPA(varargin)
                     % gridobj reader may be NaN because this is special for DEM data.
                     tmp_obj.Z = surf_b3; clear surf_b3;
                     % same extent and resolution
-                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest',true);
+                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest',true,'fillval',-9999);
                     stack(:,:,3) = tmp_obj_same_extn.Z;
                     clear tmp_obj tmp_obj_same_extn;
 
@@ -430,7 +431,7 @@ function autoPrepareDataESPA(varargin)
                     % gridobj reader may be NaN because this is special for DEM data.
                     tmp_obj.Z = surf_b4; clear surf_b4;
                     % same extent and resolution
-                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest',true);
+                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest',true,'fillval',-9999);
                     stack(:,:,4) = tmp_obj_same_extn.Z;
                     clear tmp_obj tmp_obj_same_extn;
 
@@ -441,7 +442,7 @@ function autoPrepareDataESPA(varargin)
                     % gridobj reader may be NaN because this is special for DEM data.
                     tmp_obj.Z = surf_b5; clear surf_b5;
                     % same extent and resolution
-                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest',true);
+                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest',true,'fillval',-9999);
                     stack(:,:,5) = tmp_obj_same_extn.Z;
                     clear tmp_obj tmp_obj_same_extn;
 
@@ -452,7 +453,7 @@ function autoPrepareDataESPA(varargin)
                     % gridobj reader may be NaN because this is special for DEM data.
                     tmp_obj.Z = surf_b7; clear surf_b7;
                     % same extent and resolution
-                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest',true);
+                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest',true,'fillval',-9999);
                     stack(:,:,6) = tmp_obj_same_extn.Z;
                     clear tmp_obj tmp_obj_same_extn;
 
@@ -463,7 +464,7 @@ function autoPrepareDataESPA(varargin)
                     % gridobj reader may be NaN because this is special for DEM data.
                     tmp_obj.Z = surf_b6; clear surf_b6;
                     % same extent and resolution
-                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest',true);
+                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest',true,'fillval',-9999);
                     stack(:,:,7) = tmp_obj_same_extn.Z;
                     clear tmp_obj tmp_obj_same_extn;
 
@@ -476,7 +477,7 @@ function autoPrepareDataESPA(varargin)
                     % gridobj reader may be NaN because this is special for DEM data.
                     tmp_obj.Z = surf_b1; clear surf_b1;
                     % same extent and resolution
-                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest',true);
+                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest',true,'fillval',-9999);
                     stack(:,:,1) = tmp_obj_same_extn.Z;
                     clear tmp_obj tmp_obj_same_extn;
 
@@ -487,7 +488,7 @@ function autoPrepareDataESPA(varargin)
                     % gridobj reader may be NaN because this is special for DEM data.
                     tmp_obj.Z = surf_b2; clear surf_b2;
                     % same extent and resolution
-                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest',true);
+                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest',true,'fillval',-9999);
                     stack(:,:,2) = tmp_obj_same_extn.Z;
                     clear tmp_obj tmp_obj_same_extn;
 
@@ -498,7 +499,7 @@ function autoPrepareDataESPA(varargin)
                     % gridobj reader may be NaN because this is special for DEM data.
                     tmp_obj.Z = surf_b3; clear surf_b3;
                     % same extent and resolution
-                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest',true);
+                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest',true,'fillval',-9999);
                     stack(:,:,3) = tmp_obj_same_extn.Z;
                     clear tmp_obj tmp_obj_same_extn;
 
@@ -509,7 +510,7 @@ function autoPrepareDataESPA(varargin)
                     % gridobj reader may be NaN because this is special for DEM data.
                     tmp_obj.Z = surf_b4; clear surf_b4;
                     % same extent and resolution
-                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest',true);
+                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest',true,'fillval',-9999);
                     stack(:,:,4) = tmp_obj_same_extn.Z;
                     clear tmp_obj tmp_obj_same_extn;
 
@@ -520,7 +521,7 @@ function autoPrepareDataESPA(varargin)
                     % gridobj reader may be NaN because this is special for DEM data.
                     tmp_obj.Z = surf_b5; clear surf_b5;
                     % same extent and resolution
-                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest',true);
+                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest',true,'fillval',-9999);
                     stack(:,:,5) = tmp_obj_same_extn.Z;
                     clear tmp_obj tmp_obj_same_extn;
 
@@ -531,7 +532,7 @@ function autoPrepareDataESPA(varargin)
                     % gridobj reader may be NaN because this is special for DEM data.
                     tmp_obj.Z = surf_b7; clear surf_b7;
                     % same extent and resolution
-                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest',true);
+                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest',true,'fillval',-9999);
                     stack(:,:,6) = tmp_obj_same_extn.Z;
                     clear tmp_obj tmp_obj_same_extn;
 
@@ -542,7 +543,7 @@ function autoPrepareDataESPA(varargin)
                     % gridobj reader may be NaN because this is special for DEM data.
                     tmp_obj.Z = surf_b6; clear surf_b61;
                     % same extent and resolution
-                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest',true);
+                    tmp_obj_same_extn = resample(tmp_obj,trgt_obj,'nearest',true,'fillval',-9999);
                     stack(:,:,7) = tmp_obj_same_extn.Z;
                     clear tmp_obj tmp_obj_same_extn;
                 end
