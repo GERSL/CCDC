@@ -45,7 +45,7 @@ function autoClassification(task,ntasks,varargin)
     ntrees = p.Results.NTrees; % number of trees grown.
     
     
-    fprintf('Start...');
+    fprintf('Start...\n');
     %
     % get image parameters automatically
     imf=dir(fullfile(ccdc_dir,'L*')); % folder names
@@ -105,12 +105,12 @@ function autoClassification(task,ntasks,varargin)
             % not exist or corrupt
 %                     fprintf('Missing the %dth row!\n',irows(i));
 
-            fprintf('Missing the %dth row!',irows(i));
+            fprintf('Missing the %dth row!\n',irows(i));
 
             continue
         end
 
-        fprintf('Processing the %dth row.',irows(i));
+        fprintf('Processing the %dth row.\n',irows(i));
 
 %                 fprintf('Processing the %dth row\n',irows(i));
         % Continous Classfication Done for a Line of timeseries pixels
