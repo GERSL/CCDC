@@ -1,4 +1,4 @@
-function autoClassification(task,ntasks)
+function autoClassification(task,ntasks,varargin)
 %AUTOCLASSIFICATION runs for Continous Classification.
 % 
 %AUTOCLASSIFICATION(1,1) automatically goes continuous classification at 
