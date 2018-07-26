@@ -1,4 +1,4 @@
-function DEMr = resample(DEM,target,method,swapzone)
+function DEMr = resample(DEM,target,method,swapzone,varargin)
 
 %RESAMPLE change spatial resolution of a GRIDobj
 %
@@ -46,7 +46,7 @@ function DEMr = resample(DEM,target,method,swapzone)
 % Date: 8. August, 2015 
 
 % check input arguments
-narginchk(2,4)
+% narginchk(2,6)
 validateattributes(target,{'double' 'GRIDobj'},{'scalar'})
 if nargin == 2;
     method = 'bilinear';
@@ -80,6 +80,7 @@ end
 T = maketform('affine',[1 0 0; 0 1 0; 0 0 1]);
 
 % Fillvalues
+
 if isinteger(DEM.Z)
     fillval = 0;
 elseif islogical(DEM.Z)
@@ -87,7 +88,14 @@ elseif islogical(DEM.Z)
 else
     fillval = nan;
 end
-
+    
+p = inputParser;
+p.FunctionName = 'Paras';   
+% optional
+% default values.
+addParameter(p,'fillval',fillval);
+parse(p,varargin{:});
+fillval = p.Results.fillval;
 
 if isa(target,'GRIDobj')
     % the target is another GRIDobj
@@ -162,9 +170,3 @@ end
         
     end
 end
-
-
-
-
-
-
