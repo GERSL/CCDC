@@ -133,7 +133,7 @@ function autoPrepareDataARD(varargin)
         %fprintf('Unzip the %dth image ...\n',i);
         try
             sr_tar = untar(fullfile(dir_cur,imf),fullfile(dir_out,n_tmp));
-            if ispc|isunix
+            if ispc
                 % Code to run on Windows platform
                 bt_tar = untar(fullfile(dir_cur,[imf(1:end-6),'BT.tar']),fullfile(dir_out,n_tmp));
             else
