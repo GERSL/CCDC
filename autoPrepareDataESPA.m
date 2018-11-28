@@ -20,15 +20,15 @@ function autoPrepareDataESPA(varargin)
 %
 % Specific parameters
 % ------------------------
-%   'InputDirectory'     Directory of input data.  Default is the path to
+%   'InDir'     Directory of input data.  Default is the path to
 %                        the current folder.
-%   'OutputDirectory'    Directory of output data.  Default is the path to
+%   'OutDir'    Directory of output data.  Default is the path to
 %                        the current folder.
 %   'ExtentSample'       An example geotiff file, of which extent will be 
 %                        used as basic reference. All images will be 
 %                        resampled to this same extent.  Default is not to
 %                        do this process if no input for this.
-%   'ClearPixelPercent'  Percentage of mininum clear pixels 
+%   'ClrPixPer'  Percentage of mininum clear pixels 
 %                        (non-ice/snow covered). Unit is %. Default is '20'.
 %
 %
@@ -51,19 +51,19 @@ function autoPrepareDataESPA(varargin)
     p.FunctionName = 'prepParas';
     % optional
     % default values.
-    addParameter(p,'InputDirectory',dir_cur);
-    addParameter(p,'OutputDirectory',dir_out);
-    addParameter(p,'ClearPixelPercent',clr_pct_min);
+    addParameter(p,'InDir',dir_cur);
+    addParameter(p,'OutDir',dir_out);
+    addParameter(p,'ClrPixPer',clr_pct_min);
     addParameter(p,'ExtentSample','');
     
     % request user's input
     parse(p,varargin{:});
-    dir_cur = p.Results.InputDirectory;
-    dir_out = p.Results.OutputDirectory;
+    dir_cur = p.Results.InDir;
+    dir_out = p.Results.OutDir;
     if isempty(dir_out)
         dir_out = dir_cur;
     end
-    clr_pct_min = p.Results.ClearPixelPercent;
+    clr_pct_min = p.Results.ClrPixPer;
     trgt_file = p.Results.ExtentSample;
   
     %% Locate to the current directory
@@ -141,7 +141,7 @@ function autoPrepareDataESPA(varargin)
             end
         end
         % unzip the images to a temporary folder
-        %fprintf('Unzip the %dth image ...\n',i);
+        fprintf('Unzip the %dth image ...\n',i);
         try
             n_gun = gunzip(fullfile(dir_cur,imf),fullfile(dir_out,n_tmp));
             n_tar = untar(fullfile(dir_out,n_tmp,imf(1:end-3)),fullfile(dir_out,n_tmp));

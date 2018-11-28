@@ -14,11 +14,11 @@ function autoPrepareDataARD(varargin)
 %   
 % Specific parameters
 % ------------------------
-%   'InputDirectory'     Directory of input data.  Default is the path to
+%   'InDir'     Directory of input data.  Default is the path to
 %                        the current folder.
-%   'OutputDirectory'    Directory of output data.  Default is the path to
+%   'OutDir'    Directory of output data.  Default is the path to
 %                        the current folder.
-%   'ClearPixelPercent'  Percentage of mininum clear pixels 
+%   'ClrPixPer'  Percentage of mininum clear pixels 
 %                        (non-ice/snow covered). Unit is %. Default is '20'.
 %
 %
@@ -31,7 +31,7 @@ function autoPrepareDataARD(varargin)
     % where the all Landsat zipped files are
     dir_cur = pwd;
     % where the output files are
-    dir_out = ‘’;
+    dir_out = '';
     % min clear pixel
     clr_pct_min = 20; % unit %
     % total number of bands
@@ -41,17 +41,17 @@ function autoPrepareDataARD(varargin)
     p.FunctionName = 'prepParas';
     % optional
     % default values.
-    addParameter(p,'InputDirectory',dir_cur);
-    addParameter(p,'OutputDirectory',dir_out);
+    addParameter(p,'InDir',dir_cur);
+    addParameter(p,'OutDir',dir_out);
     if isempty(dir_out)
         dir_out = dir_cur;
     end
-    addParameter(p,'ClearPixelPercent',clr_pct_min);
+    addParameter(p,'ClrPixPer',clr_pct_min);
     % request user's input
     parse(p,varargin{:});
-    dir_cur=p.Results.InputDirectory;
-    dir_out=p.Results.OutputDirectory;
-    clr_pct_min=p.Results.ClearPixelPercent;
+    dir_cur=p.Results.InDir;
+    dir_out=p.Results.OutDir;
+    clr_pct_min=p.Results.ClrPixPer;
     
 
     %% Locate to the current directory
@@ -130,7 +130,7 @@ function autoPrepareDataARD(varargin)
             end
         end
         % unzip the images to a temporary folder
-        %fprintf('Unzip the %dth image ...\n',i);
+        fprintf('Unzip the %dth image ...\n',i);
         try
             sr_tar = untar(fullfile(dir_cur,imf),fullfile(dir_out,n_tmp));
             if ispc

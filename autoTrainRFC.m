@@ -12,12 +12,12 @@ function autoTrainRFC(varargin)
 %   'SampleYear'         The year of the reference data. *REQUIRED.
 %   'SampleNumber'       Total number of training samples. Default is
 %                        20,000
-%   'NTrees'              Number of trees grown. Default is 500.
-%   'InputDirectory'     Directory of CCDC change detection results.  
-%                        Default is the path to current folder.
-%   'OutputDirectory'    Directory of the model output.  Default is the 
-%                        same as InputDirectory.
-
+%   'NTrees'             Number of trees grown. Default is 500.
+%   'CCDCDir'           Directory of CCDC change detection results.  
+%                       Default is the path to current folder.
+%
+% For example
+% autoTrainRFC('SampleImage','\\Mac\Home\Desktop\CCDCTest\13633','SampleYear' ,2000)
 %
 % History
 % ------------------------
@@ -38,9 +38,7 @@ function autoTrainRFC(varargin)
     % version of CCDC
     ccdc_v = 1.3;
     % where the all CCDC change detection results are
-    dir_cur = pwd;
-    % where the output files are
-    dir_out = '';
+    ccdc_dir = pwd;
     % number of trees grown.
     ntrees = 500;
     % request the user's inputs
@@ -48,20 +46,15 @@ function autoTrainRFC(varargin)
     p.FunctionName = 'trainParas';
     % optional
     % default values.
-    addParameter(p,'InputDirectory',dir_cur);
-    addParameter(p,'OutputDirectory',dir_out);
+    addParameter(p,'CCDCDir',ccdc_dir);
     addParameter(p,'SampleImage','');
     addParameter(p,'SampleYear','');
     addParameter(p,'SampleNumber','');
     addParameter(p,'NTrees',ntrees);
     
     parse(p,varargin{:});
-    dir_cur = p.Results.InputDirectory;
-    dir_out = p.Results.OutputDirectory;
-    if isempty(dir_out)
-        dir_out = dir_cur;
-    end
-    ccdc_dir = dir_cur; clear dir_cur;
+    ccdc_dir = p.Results.CCDCDir;
+    dir_out = ccdc_dir;
     
     % number of trees grown.
     ntrees = p.Results.NTrees;
@@ -130,16 +123,18 @@ function autoTrainRFC(varargin)
     % number of pixels for traning
     plusid = 0;
 
+% %     for i=1:rec_l
     for i=1:rec_l
         % Just load once for a line of rec_cg for all reference within this line    
         if i_ids(i) ~= i_row
 
-            fprintf('Processing the %dth line ...\n',i_row);
+            fprintf('Processing the %dth row ...\n',i_row);
 
             % load CCDCRec
             load(fullfile(tsfitmap_path,['record_change',num2str(i_ids(i))]));
-
+            
             % matrix of each component
+% %             try % sometimes the line record has no fields.
             t_start = [rec_cg.t_start];
             t_end = [rec_cg.t_end];
             coefs = [rec_cg.coefs];
@@ -147,7 +142,7 @@ function autoTrainRFC(varargin)
             pos = [rec_cg.pos];
             categ = [rec_cg.category];
             % reshape coefs
-            coefs = reshape(coefs,num_c,nbands-1,[]);       
+            coefs = reshape(coefs,num_c,nbands-1,[]);
         end
 
         % find the curve within a fixed time interval
