@@ -92,28 +92,33 @@ elseif nargin == 4
         end
     end
     fprintf(fid,'}\n');
+        
+        elements={'samples =','lines   =','bands   =',...
+        'header offset =','file type =', 'data type =',...
+        'interleave =','sensor type =','byte order =',...
+        'map info =','coordinate system string =','wavelength units =',...
+        'band names ='};
     
-    %     elements={'samples =','lines   =','bands   =',...
-%         'header offset =','file type =', 'data type =',...
-%         'interleave =','sensor type =','byte order =',...
-%         'map info =','coordinate system string =','wavelength units =',...
-%         'band names ='};
+    fprintf(fid,'%s \n','ENVI');
     
-%     fprintf(fid,'%s \n','ENVI');
-%     fprintf(fid,'%s %s \n','description =',info.description);
-%     fprintf(fid,'%s %d \n',elements{1,1},im_size(2));
-%     fprintf(fid,'%s %d \n',elements{1,2},im_size(1));
-%     fprintf(fid,'%s %d \n',elements{1,3},im_size(3));
-%     fprintf(fid,'%s %d \n',elements{1,4},info.header_offset);
-%     fprintf(fid,'%s %s \n',elements{1,5},info.file_type);
-%     fprintf(fid,'%s %d \n',elements{1,6},t);
-%     fprintf(fid,'%s %s \n',elements{1,7},info.interleave);
-%     fprintf(fid,'%s %s \n',elements{1,8},info.sensor_type);
-%     fprintf(fid,'%s %d \n',elements{1,9},info.byte_order);
-%     fprintf(fid,'%s %s \n',elements{1,10},info.map_info);
-%     fprintf(fid,'%s %s \n',elements{1,11},info.coordinate_system_string);
-%     fprintf(fid,'%s %s \n',elements{1,12},info.wavelength_units);
-    % fprintf(fid,'%s %s \n',elements{1,13},info.band_names);
+    try
+        fprintf(fid,'%s %s \n','description =',info.description);
+    catch
+        fprintf(fid,'%s %s \n','description =',info.descirption); % to fix the inccorect info made by the old data-preparesion funciton.
+    end
+    fprintf(fid,'%s %d \n',elements{1,1},im_size(2));
+    fprintf(fid,'%s %d \n',elements{1,2},im_size(1));
+    fprintf(fid,'%s %d \n',elements{1,3},im_size(3));
+    fprintf(fid,'%s %d \n',elements{1,4},info.header_offset);
+    fprintf(fid,'%s %s \n',elements{1,5},info.file_type);
+    fprintf(fid,'%s %d \n',elements{1,6},t);
+    fprintf(fid,'%s %s \n',elements{1,7},info.interleave);
+    fprintf(fid,'%s %s \n',elements{1,8},info.sensor_type);
+    fprintf(fid,'%s %d \n',elements{1,9},info.byte_order);
+    fprintf(fid,'%s %s \n',elements{1,10},info.map_info);
+% % %     fprintf(fid,'%s %s \n',elements{1,11},info.coordinate_system_string);
+% % %     fprintf(fid,'%s %s \n',elements{1,12},info.wavelength_units);
+% % %     fprintf(fid,'%s %s \n',elements{1,13},info.band_names);
     
     fclose(fid);
     fprintf((' . \n'));
