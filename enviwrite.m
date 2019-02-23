@@ -47,7 +47,7 @@ filename_hdr=[filename,'.hdr'];
 fid_out=fopen(filename_hdr,'wt');
 
 fprintf(fid_out,'ENVI\n');
-fprintf(fid_out,'descirption = {Landsat Scientific Data}\n');
+fprintf(fid_out,'description = {Landsat Scientific Data}\n');
 fprintf(fid_out,'samples = %d\n',ncols); % samples is for j
 fprintf(fid_out,'lines   = %d\n',nrows); % lines is for i
 fprintf(fid_out,'bands   = %d\n',bands);
