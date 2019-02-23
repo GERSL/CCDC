@@ -76,7 +76,7 @@ n_str = 'TSFitMap';
 imf = dir(fullfile(dir_cur,n_str,'record_change*')); % folder names
 num_line = size(imf,1);
 
-for line = 1300:num_line
+for line = 1:num_line
     
     % show processing status
     if line/num_line < 1
