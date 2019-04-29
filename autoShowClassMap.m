@@ -105,7 +105,7 @@ function autoShowClassMap(varargin)
     % cd to the folder for storing recored structure
     cd(v_input.name_rst);
 
-    imf = dir(fullfile(dir_cur,'record_change*')); % folder names
+    imf = dir(fullfile(pwd,'record_change*')); % folder names
     num_line = size(imf,1);
     line_pt = 0;
     %%
@@ -116,7 +116,7 @@ function autoShowClassMap(varargin)
         end
 
         % load one line of time series models
-        load(fullfile(dir_cur,imf(line).name));
+        load(fullfile(pwd,imf(line).name));
 
         % postions
         pos = [rec_cg.pos];
