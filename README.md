@@ -7,7 +7,7 @@ The Most Recent 13.01 CCDC Software for Change Detection software is [here](http
 
 The Classification software is not provided at the moment, as it required training data to run the software.
 
-CCDC Assistor 1.0 beta is also available at [here](https://drive.google.com/drive/folders/1iZmKlSNjJtb6DkinyOiPJtfT74YCE_eF), which is a user interface tool for assisting in data preparation and map extraction for CCDC (more functions are on the way).
+CCDC Assistor 1.02 is also available at [here](https://drive.google.com/drive/folders/1iZmKlSNjJtb6DkinyOiPJtfT74YCE_eF), which is a user interface tool for assisting in data preparation and map extraction for CCDC (more functions are on the way).
 
 Note that the output from CCDC will be thousands of Matlab files that contains all sorts of information for each time serie models as follows: 
 
