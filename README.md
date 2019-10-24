@@ -17,8 +17,7 @@ Note that the output from CCDC will be thousands of Matlab files that contains a
  
 3. "t_break": when the first break (change) is observed
 
-4. "coefs": the coefficients for each time series model for each spectral band
-    In each row of "coefs", they are a0 c0 a1 b1 a2 b2 a3 b3 (Zhu and Woodcock, 2014, 2015), are stored. Columns refer to Blue, Green, Red, NIR, SWIR1, SWIR2, and BT (Brightness Temperature) bands, respectively.
+4. "coefs": the coefficients for each time series model for each spectral band. In each row of "coefs", they are a0 c0 a1 b1 a2 b2 a3 b3 (Zhu and Woodcock, 2014, 2015), are stored. Columns refer to Blue, Green, Red, NIR, SWIR1, SWIR2, and BT (Brightness Temperature) bands, respectively.
 
 5. "rmse": the RMSE for each time series model for each spectral band
 
