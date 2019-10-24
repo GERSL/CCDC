@@ -9,7 +9,7 @@ The Classification software is not provided at the moment, as it required traini
 
 CCDC Assistor 1.02 is also available at [here](https://drive.google.com/drive/folders/1iZmKlSNjJtb6DkinyOiPJtfT74YCE_eF), which is a user interface tool for assisting in data preparation and map extraction for CCDC (more functions are on the way).
 
-Note that the output from CCDC will be thousands of Matlab files that contains all sorts of information for each time serie models as follows: 
+Note that the output from CCDC will be thousands of Matlab files that contains all sorts of information for each time series models as follows: 
 
 1. "t_start": when the time series model gets started
 
@@ -18,6 +18,7 @@ Note that the output from CCDC will be thousands of Matlab files that contains a
 3. "t_break": when the first break (change) is observed
 
 4. "coefs": the coefficients for each time series model for each spectral band
+    In each row of "coefs", they are a0 c0 a1 b1 a2 b2 a3 b3 (Zhu and Woodcock, 2014, 2015), are stored. Columns refer to Blue, Green, Red, NIR, SWIR1, SWIR2, and BT (Brightness Temperature) bands, respectively.
 
 5. "rmse": the RMSE for each time series model for each spectral band
 
