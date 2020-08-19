@@ -9,6 +9,7 @@ function enviwrite(filename,envi_data,datatype,resolu,UL,interleave,zone)
 %  Input  5)  'UL' is the UpperLeftPoint X Y of the UL pixel (not center of UL pixel)
 %  Input  6)  'interleave' is the bsq bip bil format
 %  Input  7)  'zone' is the UTM zone
+% History: Projection of Landsat ARD is fixed. 18 Aug., 2020. Shi
 
 if strcmp(datatype,'uint8')
     envi_data=uint8(envi_data);
