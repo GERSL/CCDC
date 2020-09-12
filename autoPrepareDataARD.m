@@ -58,14 +58,14 @@ function autoPrepareDataARD(varargin)
     % name of the temporary folder for extracting zip files
     name_tmp = 'tmp';
     % remove all temp folders
-    tmpf = dir(fullfile(dir_out,[name_tmp,'*']));
-    if ~isempty(tmpf)
-        for i = 1:length(tmpf)
-            if tmpf(i).isdir
-                rmdir(fullfile(dir_out,tmpf(i).name),'s');
-            end
-        end
-    end
+    %tmpf = dir(fullfile(dir_out,[name_tmp,'*']));
+    %if ~isempty(tmpf)
+    %    for i = 1:length(tmpf)
+    %        if tmpf(i).isdir
+    %            rmdir(fullfile(dir_out,tmpf(i).name),'s');
+    %        end
+    %    end
+    %end
     
     %% Filter for Landsat folders
     % get num of total folders start with "L"
