@@ -143,7 +143,7 @@ function autoPrepareDataARD(varargin)
             if isfolder(fullfile(dir_out,n_tmp))
                 rmdir(fullfile(dir_out,n_tmp),'s');
             end
-            fprintf('BT or SR file cannot be found in the %dth image',i);
+            fprintf('BT or SR file cannot be found in the %dth image\n',i);
             continue;
         end
 
