@@ -133,8 +133,12 @@ function autoPrepareDataARD(varargin)
         fprintf('Unzip the %dth image ...\n',i);
         try
             sr_tar = untar(fullfile(dir_cur,imf),fullfile(dir_out,n_tmp));
-            filepath_bt = fullfile(dir_cur, strrep(imf,'_SR','_BT'));
-            bt_tar = untar(filepath_bt,fullfile(dir_out,n_tmp));
+            if strcmp(imf(end-3:end), '.tar')
+                % Code to run on Windows platform
+                bt_tar = untar(fullfile(dir_cur,[imf(1:end-6),'BT.tar']),fullfile(dir_out,n_tmp));
+            else
+                bt_tar = untar(fullfile(dir_cur,[imf(1:end-2),'BT']),fullfile(dir_out,n_tmp));
+            end
         catch me
             if isfolder(fullfile(dir_out,n_tmp))
                 rmdir(fullfile(dir_out,n_tmp),'s');
