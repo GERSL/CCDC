@@ -43,6 +43,7 @@ ccdc_v = 12.30;
 
 % get num of total folders start with "L"
 imf=dir(fullfile(dir_l,'L*')); % folder names
+imf(~[imf.isdir]) = []; % only directory
 % number of images
 num_imgs = size(imf,1);
 % filter for Landsat folders
