@@ -75,8 +75,8 @@ fprintf(fid_out,'byte order = 0\n');
 
 if isempty(zone)
     %label as Landsat ARD
-    fprintf(fid_out, 'map info = {Albers Conical Equal Area, 1, 1, %d, %d, %d, %d, WGS-84}\r',UL(1),UL(2),resolu(1),resolu(2));
-    fprintf(fid_out, 'projection info = {9, 6378140, 6356755.288157528, 23, -96, 0, 0, 29.5, 45.5,WGS-84, Albers Conical Equal Area}\r');
+    fprintf(fid_out, 'map info = {Albers Conical Equal Area, 1, 1, %d, %d, %d, %d, WGS-84}\n',UL(1),UL(2),resolu(1),resolu(2));
+    fprintf(fid_out, 'projection info = {9, 6378140, 6356755.288157528, 23, -96, 0, 0, 29.5, 45.5,WGS-84, Albers Conical Equal Area}\n');
     fprintf(fid_out, 'coordinate system string = {PROJCS["WGS_1984_Albers",GEOGCS["GCS_WGS_1984",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378140.0,298.257]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Albers"],PARAMETER["false_easting",0.0],PARAMETER["false_northing",0.0],PARAMETER["central_meridian",-96.0],PARAMETER["standard_parallel_1",29.5],PARAMETER["standard_parallel_2",45.5],PARAMETER["latitude_of_origin",23.0],UNIT["Meter",1.0]]}');
 else
     if (zone > 0)
