@@ -32,10 +32,10 @@ function autoPrepareDataESPA(varargin)
 %                        (non-ice/snow covered). Unit is %. Default is '20'.
 %
 %
-%   Author:  Zhe Zhu (zhe.zhu#ttu.edu)
-%            Shi Qiu (shi.qiu#ttu.edu)
-%            Junxue Zhang (junxue.zhang#ttu.edu)
-%   Date: 24. Jun, 2018
+%   Author:  Zhe Zhu (zhe#uconn.edu)
+%            Shi Qiu (shi.qiu#uconn.edu)
+
+%   Date: 24. Sept., 2020
 
     %% get parameters from inputs
     % where the all Landsat zipped files are
@@ -215,16 +215,24 @@ function autoPrepareDataESPA(varargin)
                     
                     % get projection information from geotiffinfo
                     info = geotiffinfo(trgt_file);
-                    jidim = [info.SpatialRef.RasterSize(2),info.SpatialRef.RasterSize(1)];
-                    jiul = [info.SpatialRef.XLimWorld(1),info.SpatialRef.YLimWorld(2)];
+                    jidim = [info.SpatialRef.RasterSize(2),info.SpatialRef.RasterSize(1)];                    
+                    try
+                        jiul = [info.SpatialRef.XLimWorld(1),info.SpatialRef.YLimWorld(2)];
+                    catch
+                        jiul = [info.SpatialRef.LongitudeLimits(1),info.SpatialRef.LatitudeLimits(2)];
+                    end
                     resolu = [info.PixelScale(1),info.PixelScale(2)];
                     zc = info.Zone;
                     clear info;
                 else
                     % get projection information from geotiffinfo
                     info = geotiffinfo(tif_cfmask);
-                    jidim = [info.SpatialRef.RasterSize(2),info.SpatialRef.RasterSize(1)];
-                    jiul = [info.SpatialRef.XLimWorld(1),info.SpatialRef.YLimWorld(2)];
+                    jidim = [info.SpatialRef.RasterSize(2),info.SpatialRef.RasterSize(1)];                    
+                    try
+                        jiul = [info.SpatialRef.XLimWorld(1),info.SpatialRef.YLimWorld(2)];
+                    catch
+                        jiul = [info.SpatialRef.LongitudeLimits(1),info.SpatialRef.LatitudeLimits(2)];
+                    end
                     resolu = [info.PixelScale(1),info.PixelScale(2)];
                     zc = info.Zone;
                     clear info;
