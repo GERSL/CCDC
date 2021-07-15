@@ -37,6 +37,13 @@ function autoPrepareDataESPA(varargin)
 
 %   Date: 24. Sept., 2020
 
+    warning('off','all'); % do not show warning information
+    % not to display the conflict between GRIDOBJ and internal funcitons
+    % not to display the different projection
+    
+    %% Add search path
+    addpath(fullfile(fileparts(mfilename('fullpath')), 'GRIDobj'));
+    
     %% get parameters from inputs
     % where the all Landsat zipped files are
     dir_cur = pwd;
