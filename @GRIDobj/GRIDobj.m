@@ -61,6 +61,8 @@ classdef GRIDobj
 % Author: Wolfgang Schwanghart (w.schwanghart[at]geo.uni-potsdam.de)
 % Date: 17. August, 2017
 
+% Updated by Shi
+% (1) Do not exmine Nan data since this will disturb the Landsat image loading  (edit on July 14, 2021)
     
     properties
         %Public properties
@@ -256,8 +258,13 @@ classdef GRIDobj
                     try 
                         % try to read using geotiffread (requires mapping
                         % toolbox)
-                        [DEM.Z, DEM.refmat, ~] = geotiffread(filename);
-                        gtiffinfo              = geotiffinfo(filename);
+                        try % to use internal geotiffread and geotiffinfo
+                            [DEM.Z, DEM.refmat, ~] = geotiffread(string(filename));
+                            gtiffinfo              = geotiffinfo(filename);
+                        catch % to use modified geotiffread and geotiffinfo for supporting Landsat Collection 2 COG data
+                            [DEM.Z, DEM.refmat, ~] = geotiffread_lcog(string(filename));
+                            gtiffinfo              = geotiffinfo_lcog(filename);
+                        end
                         DEM.georef.SpatialRef  = gtiffinfo.SpatialRef; 
                         DEM.georef.GeoKeyDirectoryTag = gtiffinfo.GeoTIFFTags.GeoKeyDirectoryTag;
                         georef_enabled = true;
@@ -322,13 +329,15 @@ classdef GRIDobj
                         end
                     end
      
+                    % do not exmine nan data since this will disturb the Landsat image loading  (edit by Shi)
                     % Finally, check whether no_data tag is available. This tag is
                     % not accessible using geotiffinfo (nice hack by Simon
                     % Riedl)
-                    tiffinfo = imfinfo(filename);
-                    if isfield(tiffinfo,'GDAL_NODATA')
-                        nodata_val = str2double(tiffinfo.GDAL_NODATA);
-                    end
+%                     tiffinfo = imfinfo(filename);
+%                     tiffinfo = tiffinfo(1); % force to have the 1st one for Landsat new COG geotiff (edit by Shi)
+%                     if isfield(tiffinfo,'GDAL_NODATA')
+%                         nodata_val = str2double(tiffinfo.GDAL_NODATA);
+%                     end
         
                 else
                     [DEM.Z,R] = rasterread(filename);
@@ -339,40 +348,41 @@ classdef GRIDobj
                 DEM.size = size(DEM.Z);
                 DEM.cellsize = abs(DEM.refmat(2));
                 
+                % do not exmine nan data since this will disturb the Landsat image loading  (edit by Shi)
                 % remove nans
-                demclass = class(DEM.Z);
-                nodata_val_exists = exist('nodata_val','var');
-                
-                switch demclass
-                    case {'uint8','uint16','uint32'}
-                        % unsigned integer
-                        DEM.Z = single(DEM.Z);
-                        
-                        if nodata_val_exists
-                            nodata_val = single(nodata_val);
-                            DEM.Z(DEM.Z == nodata_val) = nan;
-                        else                                                 
-                            DEM.Z(DEM.Z==intmax(demclass)) = nan;
-                        end
-                        
-                    case {'int8','int16','int32'}
-                        % signed integer
-                        DEM.Z = single(DEM.Z);
-                        if nodata_val_exists
-                            nodata_val = single(nodata_val);
-                            DEM.Z(DEM.Z == nodata_val) = nan;
-                        else                                                 
-                            DEM.Z(DEM.Z==intmin(demclass)) = nan;
-                        end
-                        
-                    case {'double','single'}
-                        if nodata_val_exists
-                            DEM.Z(DEM.Z == cast(nodata_val,class(DEM.Z))) = nan;
-                        end
-                    case 'logical'
-                    otherwise
-                        error('TopoToolbox:GRIDobj','unrecognized class')
-                end
+%                 demclass = class(DEM.Z);
+%                 nodata_val_exists = exist('nodata_val','var');
+%                 
+%                 switch demclass
+%                     case {'uint8','uint16','uint32'}
+%                         % unsigned integer
+%                         DEM.Z = single(DEM.Z);
+%                         
+%                         if nodata_val_exists
+%                             nodata_val = single(nodata_val);
+%                             DEM.Z(DEM.Z == nodata_val) = nan;
+%                         else                                                 
+%                             DEM.Z(DEM.Z==intmax(demclass)) = nan;
+%                         end
+%                         
+%                     case {'int8','int16','int32'}
+%                         % signed integer
+%                         DEM.Z = single(DEM.Z);
+%                         if nodata_val_exists
+%                             nodata_val = single(nodata_val);
+%                             DEM.Z(DEM.Z == nodata_val) = nan;
+%                         else                                                 
+%                             DEM.Z(DEM.Z==intmin(demclass)) = nan;
+%                         end
+%                         
+%                     case {'double','single'}
+%                         if nodata_val_exists
+%                             DEM.Z(DEM.Z == cast(nodata_val,class(DEM.Z))) = nan;
+%                         end
+%                     case 'logical'
+%                     otherwise
+%                         error('TopoToolbox:GRIDobj','unrecognized class')
+%                 end
                 
                 
             end 
