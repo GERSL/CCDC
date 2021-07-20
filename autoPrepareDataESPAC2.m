@@ -43,7 +43,7 @@ function autoPrepareDataESPAC2(varargin)
 %                 
 %
 %   This version was tested on Matlab 2021b
-%   Date: 12 July, 2021
+%   Date: 20 July, 2021
 
     warning('off','all'); % do not show warning information
     % not to display the conflict between GRIDOBJ and internal funcitons
