@@ -314,6 +314,19 @@ function autoPrepareDataESPAC2(varargin)
             end
         end
 
+        % convert to the same format as we used before, and then we do
+        % not need to change code of CCD.
+        % examine the scale factors from .xml or 
+        % https://prd-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/atoms/files/LSDS-1619_Landsat8-C2-L2-ScienceProductGuide-v2.pdf
+        stack(:,:,1) = 10000.*(double(stack(:,:,1)).*0.0000275 - 0.2); % rescale to 0 ~10000
+        stack(:,:,2) = 10000.*(double(stack(:,:,2)).*0.0000275 - 0.2); % rescale to 0 ~10000
+        stack(:,:,3) = 10000.*(double(stack(:,:,3)).*0.0000275 - 0.2); % rescale to 0 ~10000
+        stack(:,:,4) = 10000.*(double(stack(:,:,4)).*0.0000275 - 0.2); % rescale to 0 ~10000
+        stack(:,:,5) = 10000.*(double(stack(:,:,5)).*0.0000275 - 0.2); % rescale to 0 ~10000
+        stack(:,:,6) = 10000.*(double(stack(:,:,6)).*0.0000275 - 0.2); % rescale to 0 ~10000
+        stack(:,:,7) =    10.*(double(stack(:,:,7)).*0.00341802 + 149); % rescale same as Landsat Collection 1 ARD (0.1)
+
+
         n_stack = [char(n_mtl),'_MTLstack'];
         
         % add directory
