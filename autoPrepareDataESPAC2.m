@@ -42,6 +42,7 @@ function autoPrepareDataESPAC2(varargin)
 %               GERS Lab, UCONN
 %                 
 %
+%   This version was tested on Matlab 2021b
 %   Date: 12 July, 2021
 
     warning('off','all'); % do not show warning information
