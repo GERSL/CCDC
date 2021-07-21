@@ -192,12 +192,12 @@ function autoPrepareDataESPAC2(varargin)
         % convert pixel QA to fmask values
         % see more details from USGS document at https://prd-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/atoms/files/LSDS-1328_Landsat8-9-OLI-TIRS-C2-L2-DFCB-v6.pdf
         cfmask(bitget(cfmask0.Z,1) == 1) = 255; % Filled
-        cfmask(bitget(cfmask0.Z,2) == 1) = 4; % Dilated Cloud
-        cfmask(bitget(cfmask0.Z,4) == 1) = 4; % Cloud
-        cfmask(bitget(cfmask0.Z,5) == 1) = 2; % Cloud Shadow
-        cfmask(bitget(cfmask0.Z,6) == 1) = 3; % Snow
         cfmask(bitget(cfmask0.Z,7) == 1) = 0; % Clear Land and Water [No Cloud & No Dialted Cloud]
         cfmask(bitget(cfmask0.Z,8) == 1) = 1; % Water
+        cfmask(bitget(cfmask0.Z,5) == 1) = 2; % Cloud Shadow
+        cfmask(bitget(cfmask0.Z,6) == 1) = 3; % Snow
+        cfmask(bitget(cfmask0.Z,2) == 1) = 4; % Dilated Cloud
+        cfmask(bitget(cfmask0.Z,4) == 1) = 4; % Cloud
 
         clr_pct = sum(cfmask(:)<=1)/sum(cfmask(:)<255);
         clr_pct = 100*clr_pct;
