@@ -43,7 +43,7 @@ function autoPrepareDataESPAC2(varargin)
 %                 
 %
 %   This version was tested on Matlab 2021b
-%   Date: 20 July, 2021
+%   Date: 18 Oct., 2021
 
     warning('off','all'); % do not show warning information
     % not to display the conflict between GRIDOBJ and internal funcitons
@@ -59,7 +59,7 @@ function autoPrepareDataESPAC2(varargin)
     % default values.
     addParameter(p,'pathin', pwd);
     addParameter(p,'pathout', '');
-    addParameter(p,'clear', 20 ); % unit %
+    addParameter(p,'clear', 0 ); % unit %
     addParameter(p,'extfile','');
     addParameter(p,'task', 1); % 1st task
     addParameter(p,'ntasks', 1); % single task to compute
@@ -223,35 +223,18 @@ function autoPrepareDataESPAC2(varargin)
                 tmp_obj_same_extn = resample(cfmask0,trgt_obj,'nearest',true,'fillval',255);
                 cfmask = tmp_obj_same_extn.Z;
                 clear tmp_obj_same_extn;
-        
-                % get projection information from geotiffinfo
-                try % normal geotiff
-                        info = geotiffinfo(trgt_file);
-                        jidim = [info.SpatialRef.RasterSize(2),info.SpatialRef.RasterSize(1)];                    
-                        try
-                            jiul = [info.SpatialRef.XLimWorld(1),info.SpatialRef.YLimWorld(2)];
-                        catch
-                            jiul = [info.SpatialRef.LongitudeLimits(1),info.SpatialRef.LatitudeLimits(2)];
-                        end
-                        resolu = [info.PixelScale(1),info.PixelScale(2)];
-                        zc = info.Zone;
-                catch % cloud-format geotiff
-                        % get projection information from geotiffinfo
-                        info = georasterinfo(trgt_file);
-                        jidim = [info.RasterSize(2), info.RasterSize(1)];                    
-                        jiul = [info.RasterReference.XLimWorld(1), info.RasterReference.YLimWorld(2)];
-                        resolu = [info.RasterReference.SampleSpacingInWorldX, info.RasterReference.SampleSpacingInWorldY];
-                        % to have UTM Zone
-                        zc = info.CoordinateReferenceSystem.Name;
-                        zc = strsplit(zc, ' ');
-                        zc = char(zc(end)); % i.e., 16N
-                        if strcmpi( zc(end), 'n')
-                            zc = str2double(zc(1:end-1));
-                        else
-                            zc = 0 - str2double(zc(1:end-1));
-                        end
+                jiul = [trgt_obj.georef.SpatialRef.XLimWorld(1), trgt_obj.georef.SpatialRef.YLimWorld(2)];
+                resolu = [trgt_obj.georef.SpatialRef.SampleSpacingInWorldX, trgt_obj.georef.SpatialRef.SampleSpacingInWorldY];
+               zc = trgt_obj.georef.GeoKeyDirectoryTag.GTCitationGeoKey;
+                zc = strsplit(zc, ' ');
+                zc = char(zc(end)); % i.e., 16N
+                if strcmpi( zc(end), 'n')
+                    zc = str2double(zc(1:end-1));
+                else
+                    zc = 0 - str2double(zc(1:end-1));
                 end
-                clear info;
+                jidim = [trgt_obj.size(2), trgt_obj.size(1)];
+                
             else
                 % get projection information from geotiffinfo
                 info = georasterinfo(tif_cfmask);
@@ -338,6 +321,7 @@ function autoPrepareDataESPAC2(varargin)
         % write to images folder
 %         fprintf('Writing %s image ...\n',n_mtl);
         n_stack = fullfile(n_dir,n_stack);
+        
         enviwrite(n_stack,stack,'int16',resolu,jiul,'bip',zc);
 
         % remove the tmp folder
