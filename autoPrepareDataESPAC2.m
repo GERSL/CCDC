@@ -224,8 +224,8 @@ function autoPrepareDataESPAC2(varargin)
                 cfmask = tmp_obj_same_extn.Z;
                 clear tmp_obj_same_extn;
                 jiul = [trgt_obj.georef.SpatialRef.XLimWorld(1), trgt_obj.georef.SpatialRef.YLimWorld(2)];
-                resolu = [trgt_obj.georef.SpatialRef.SampleSpacingInWorldX, trgt_obj.georef.SpatialRef.SampleSpacingInWorldY];
-               zc = trgt_obj.georef.GeoKeyDirectoryTag.GTCitationGeoKey;
+                resolu == [trgt_obj.georef.SpatialRef.CellExtentInWorldX, trgt_obj.georef.SpatialRef.CellExtentInWorldY];
+                zc = trgt_obj.georef.GeoKeyDirectoryTag.GTCitationGeoKey;
                 zc = strsplit(zc, ' ');
                 zc = char(zc(end)); % i.e., 16N
                 if strcmpi( zc(end), 'n')
@@ -240,7 +240,7 @@ function autoPrepareDataESPAC2(varargin)
                 info = georasterinfo(tif_cfmask);
                 jidim = [info.RasterSize(2), info.RasterSize(1)];                    
                 jiul = [info.RasterReference.XLimWorld(1), info.RasterReference.YLimWorld(2)];
-                resolu = [info.RasterReference.SampleSpacingInWorldX, info.RasterReference.SampleSpacingInWorldY];
+                resolu = [info.RasterReference.CellExtentInWorldX, info.RasterReference.CellExtentInWorldY];
                 % to have UTM Zone
                 zc = info.CoordinateReferenceSystem.Name;
                 zc = strsplit(zc, ' ');
