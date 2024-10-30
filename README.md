@@ -1,11 +1,9 @@
 # CCDC
-Algorithm developed for Continuous Change Detection and Classification (CCDC) of land cover using all available Landsat data. Please contact Zhe Zhu (zhe@uconn.edu) at Department of Natural Resources and the Environment, University of Connecticut if you have any questions. 
+Algorithm developed for Continuous Change Detection and Classification (CCDC) of land cover using all available Landsat data. Please contact Zhe Zhu (zhe@uconn.edu) at Department of Natural Resources and the Environment, University of Connecticut if you have any questions.
 
-CCDC Software is available online now!
+CCDC has been implemented on [Google Earth Engine (GEE)](https://developers.google.com/earth-engine/apidocs/ee-algorithms-temporalsegmentation-ccdc) and the related tools are at [this link](https://gee-ccdc-tools.readthedocs.io/en/latest).
 
-The Most Recent 13.01 CCDC Software for Change Detection software is [here](https://drive.google.com/file/d/1XxTM2gmpe3hHGxfpXVPLbmUZC40nLzpK/view?usp=sharing). It would work both for Analysis Ready Data and Collection 1 data. It would only work for 64 bits Linux machine. 
-
-The Classification software is not provided at the moment, as it required training data to run the software.
+The Classification software is not provided at the moment, as it requires training data to run the software.
 
 CCDC Assistor 1.02 is also available at [here](https://drive.google.com/drive/folders/1iZmKlSNjJtb6DkinyOiPJtfT74YCE_eF), which is a user interface tool for assisting in data preparation and map extraction for CCDC (more functions are on the way).
 
@@ -33,15 +31,7 @@ Note that the output from CCDC will be thousands of Matlab files that contains a
 
 You need to extract those information from thousand of Matlab file to generate change maps or used as input for change detection. 
 
-How to use the code:
-
-1. Install Matlab Runtime Compilier version 8.1 for Linux 64-bit [here](http://ssd.mathworks.com/supportfiles/downloads/R2017b/deployment_files/R2017b/installers/glnxa64/MCR_R2017b_glnxa64_installer.zip) 
-
-2. Download all available Landsat CDR data from [espa](https://espa.cr.usgs.gov/) and put them into BIP ENVI format. This including stacking spectral bands in sequence of Blue, Green, Red, NIR, SWIR1, SWIR2, TIR, Fmask. Each image is in its sub-folders. Sample data can be downloaded [here](https://drive.google.com/drive/folders/1RerfMXpTrIOaZ_RG14MQlDnvFZZ4UBg2?usp=sharing).
-
-3. CD to the image folder where all the images are saved in each individual subfolder. If your CCDC software is save in this location /zhezhu/ccdc/, you can just type /zhezhu/ccdc/CCDC_ChangeARD13_01 1 1 to Run the standalone sotware on one core. 
-
-Extra instructions: If you want to run on N cores, you will need to write script to submit job to each individual core by CCDC_ChangeARD13_01 i n (i=1,2,3...n; where n is the total number of cores, and i is which core to run the current job). CCDC is extremly computational expensive. Please use as many cores as you can on your Linux clusters. The computing time for one line of ARD data (5,000 pixels) takes around 1 hours for 1 core (CCDC process line-by-line). CCDC default parameters are 0.99 change probability, 6 consecutive observations, and a maximum of 8 coefficients for time series models. If you want to specify your parameters, you just need to create a .txt file named 'CCDC_Parameters.txt' within the images folder, in which the first variable specify change probability, the second specify number of consecutive days, and the last variable is the maximum number of coefficients (can be 4, 6, or 8), such as 0.95 5 6. 
+If you want to run on N cores, you will need to write script to submit job to each individual core by CCDC_ChangeARD13_01 i n (i=1,2,3...n; where n is the total number of cores, and i is which core to run the current job). CCDC is extremly computational expensive. Please use as many cores as you can on your Linux clusters. The computing time for one line of ARD data (5,000 pixels) takes around 1 hours for 1 core (CCDC process line-by-line). CCDC default parameters are 0.99 change probability, 6 consecutive observations, and a maximum of 8 coefficients for time series models. If you want to specify your parameters, you just need to create a .txt file named 'CCDC_Parameters.txt' within the images folder, in which the first variable specify change probability, the second specify number of consecutive days, and the last variable is the maximum number of coefficients (can be 4, 6, or 8), such as 0.95 5 6. 
 
 Please cite the following papers
 
